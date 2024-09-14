@@ -1,0 +1,55 @@
+version: '3'
+services:
+  google-parser:
+    build:
+      context: ./parses_goog_services
+      dockerfile: dockerfile
+    expose:
+      - 3000
+    environment:
+      - ENV=docker
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - RABBIT_USER=${RABBIT_USER}
+      - RABBIT_PASSWORD=${RABBIT_PASSWORD}
+      - RABBIT_HOST=${RABBIT_HOST}
+      - RABBIT_PORT=${RABBIT_PORT}
+      - RABBIT_WAY=${RABBIT_WAY}
+      - GOOGLE_USER_ID=${GOOGLE_USER_ID}
+      - GOOGLE_KEY=${GOOGLE_KEY}
+
+    restart: always
+    deploy:
+      replicas: ${GOOGLE_PARSER_REPLICAS}
+      resources:
+        limits:
+          memory: 256M
+
+  sites-parser:
+    build:
+      context: ./parses_sites_servises
+      dockerfile: dockerfile
+    expose:
+      - 3000
+    environment:
+      - ENV=docker
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - RABBIT_USER=${RABBIT_USER}
+      - RABBIT_PASSWORD=${RABBIT_PASSWORD}
+      - RABBIT_HOST=${RABBIT_HOST}
+      - RABBIT_PORT=${RABBIT_PORT}
+      - RABBIT_WAY=${RABBIT_WAY}
+
+    restart: always
+    deploy:
+      replicas: ${SITES_PARSER_REPLICAS}
+      resources:
+        limits:
+          memory: 256M
