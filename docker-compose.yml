@@ -2,7 +2,7 @@ version: '3'
 services:
   google-parser:
     build:
-      context: ./parses_goog_services
+      context: ./parses_goog_service
       dockerfile: dockerfile
     expose:
       - 3000
@@ -30,7 +30,7 @@ services:
 
   sites-parser:
     build:
-      context: ./parses_sites_servises
+      context: ./parses_sites_service
       dockerfile: dockerfile
     expose:
       - 3000
